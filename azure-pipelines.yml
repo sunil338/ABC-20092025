@@ -32,6 +32,7 @@ steps:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+    backendServiceArm: 'sunil-app'
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
     ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
@@ -44,6 +45,7 @@ steps:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     args: '-auto-approve'
+    backendServiceArm: 'sunil-app'
   env:
     ARM_CLIENT_ID: $(ARM_CLIENT_ID)
     ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)

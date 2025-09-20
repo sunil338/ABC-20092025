@@ -7,42 +7,36 @@ variables:
 - group: TFSecrets
 
 steps:
-# 1️⃣ Checkout your repo so Terraform can see the .tf files
 - checkout: self
 
-# 2️⃣ Install Terraform
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: '1.9.5'
 
-# 3️⃣ Terraform Init (with remote backend)
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'      # root of repo
-    backendServiceArm: 'sunil-app'                             # DevOps service connection
-    backendAzureRmResourceGroupName: 'Sunil-vault'             # RG with state storage
-    backendAzureRmStorageAccountName: 'sunildev'               # Storage account
-    backendAzureRmContainerName: 'file'                        # Blob container
-    backendAzureRmKey: 'terraform.tfstate'                     # State file name
+    workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage' 
+    backendServiceArm: 'sunil-app' 
+    backendAzureRmResourceGroupName: 'Sunil-vault'
+    backendAzureRmStorageAccountName: 'sunildev'  
+    backendAzureRmContainerName: 'file'  
+    backendAzureRmKey: 'terraform.tfstate' 
 
-# 4️⃣ Terraform Plan
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'
-    environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection
+    environmentServiceNameAzureRM: 'sunil-app' 
   env:
-    public_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDYeVLA0gc8Fpqvi6VnnIT8xjtOlwsncxt6MOnr6hHmRS5sjWVbBBo6b15y9qXVbUhWRhesKmIXptwRU/LXy8q61Ybs6IHVBRndOK8flC6/khzz0laKQr8LMvmrq6qAFBqkpFrOHnQM7rd+3mLAMVgYpshKgx8JL/vGg94ZrnewS/ERZ6/1IFw4mp9CToZok6WncCCbffHAHqIp3CzfJO/ZYJewdATu0OZLULjiz3hiEVNWceehzwoo4jziW5yjnTGEkst09jWRPF+YSrqQFHcML5nnISH692CisgETfdu9nEwI6mJY4oS7ex/NHUwVDesW96PBgRHz3Sjdl6yWFg6/KtvLN3Lt2SWFtbqQd5q6647EGAYZpTrVBwLuuy9u4thMQqFxtqsGNdKJqg8jgM+K4u7qAW8dUwGPk6AkeprXXudQWeXqFpys+SpCeZBdagve/QZNsGZIye/abk4JJzLIsIpycPvVK47BgKItD5S+TLoqDCjco0N4XtipoMouQ3AAAgsJv38iIg324RFAGkpetEm0L9nDqP6hIkZPkqI/qm/57mwMFoX3x98nsBLK1DVet9xxhjgSiTgFYOWVaS721yFkWGmFWB66zr6G7p/1VE4D+lkeWeFIxMnXkuoqLBYEzxQqxQ6epjwqZzyYWTjxOXYPEXxT0Zf5+up1Zb2P1w== azureuser
+    public_key: $(PUBLIC_KEY)
 
-
-# 5️⃣ Terraform Apply
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'
     args: '-auto-approve'
-    environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection
+    environmentServiceNameAzureRM: 'sunil-app'  

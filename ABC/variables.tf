@@ -23,5 +23,5 @@ variable "username" {
 
 variable "public_key_path" {
   description = "Path to SSH public key"
-  default     = "/home/azureuser/.ssh/id_rsa.pub"
+  default     = "keys/id_rsa.pub"
 }

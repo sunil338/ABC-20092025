@@ -34,6 +34,8 @@ steps:
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'
     environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection
+  env:
+    public_key: $(PUBLIC_KEY)
 
 # 5️⃣ Terraform Apply
 - task: TerraformTask@5

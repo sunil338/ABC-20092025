@@ -92,7 +92,7 @@ resource "azurerm_linux_virtual_machine" "vm1" {
 
   admin_ssh_key {
     username   = var.username
-    public_key = file(var.public_key_path)
+    public_key = var.public_key_path
   }
 
   os_disk {
@@ -118,7 +118,7 @@ resource "azurerm_linux_virtual_machine" "vm2" {
 
   admin_ssh_key {
     username   = var.username
-    public_key = file(var.public_key_path)
+    public_key = var.public_key_path
   }
 
   os_disk {

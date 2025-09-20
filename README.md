@@ -1,16 +1,38 @@
-1.Create a GitHub repository with name ABC-20092025
+Project ABC-20092025
 
-2.Create Terraform script
-2.a Create 2 virtual networks with address space 10.5.0.0/16 and 10.15.0.0/16
-2.b Create network peering between these 2 networks
+Steps followed
+1. Create GitHub repo
+-Repo name: ABC-20092025
+-Pushed all Terraform + scripts to repo.
 
-3.Create 1 vm in each network
-3.a Create VM1 in network 1 with public IP
-3.b Create VM2 in network 2 with only private IP (use same username and key for both machines)
-3.e Use variable to capture public and private IPs
+2. Terraform setup
+-Created 2 VNets:
+-VNet1: 10.5.0.0/16
+-VNet2: 10.15.0.0/16
+-Created VNet peering between them.
 
-4.Create a different folder and create a TF script with GitHub repo as a module source
+3. Virtual Machines
+-VM1 in VNet1 with public + private IP.
+-VM2 in VNet2 with only private IP.
+-Used same azureuser username and SSH key for both.
 
-5.Validate the private connectivity between the machines using a shell script
+4. Outputs
+-Captured IPs using outputs.tf:
+-VM1 Public IP
+-VM1 Private IP
+-VM2 Private IP
 
-6.Create a infra pipeline using 5 as a source and automate completely with AZD
+5. Validation script
+-Wrote a shell script to test:
+-Ping from VM1 → VM2
+-SSH from VM1 → VM2
+-Script must be run from VM1.
+
+6. Azure DevOps pipeline
+-Created azure-pipelines.yml to:
+  i)Run terraform init
+  ii)Run terraform plan
+  iii)Run terraform apply
+
+-Used Azure service connection for authentication.
+-Passed public key via pipeline variable.

@@ -11,12 +11,13 @@ steps:
   inputs:
     terraformVersion: '1.9.5'
 
+# Terraform Init
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    backendServiceArm: 'sunil-app'
+    backendServiceArm: 'sunil-app'                     # ✅ correct for init
     backendAzureRmResourceGroupName: 'Sunil-vault'
     backendAzureRmStorageAccountName: 'sunildev'
     backendAzureRmContainerName: 'file'
@@ -27,17 +28,19 @@ steps:
     ARM_TENANT_ID: $(ARM_TENANT_ID)
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 
+# Terraform Plan
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    backendServiceArm: 'sunil-app'
+    environmentServiceNameAzureRM: 'sunil-app'         # ✅ correct parameter
 
+# Terraform Apply
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     args: '-auto-approve'
-    backendServiceArm: 'sunil-app'
+    environmentServiceNameAzureRM: 'sunil-app'         # ✅ correct parameter

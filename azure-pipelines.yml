@@ -33,11 +33,6 @@ steps:
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     backendServiceArm: 'sunil-app'
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 
 - task: TerraformTask@5
   inputs:
@@ -46,8 +41,3 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     args: '-auto-approve'
     backendServiceArm: 'sunil-app'
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)

@@ -11,7 +11,7 @@ steps:
   inputs:
     terraformVersion: '1.9.5'
 
-- task: TerraformCLI@1
+- task: TerraformTask@5
   inputs:
     command: 'init'
   env:
@@ -20,7 +20,7 @@ steps:
     ARM_TENANT_ID: $(ARM_TENANT_ID)
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 
-- task: TerraformCLI@1
+- task: TerraformTask@5
   inputs:
     command: 'plan'
     workingDirectory: '.'
@@ -30,7 +30,7 @@ steps:
     ARM_TENANT_ID: $(ARM_TENANT_ID)
     ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
 
-- task: TerraformCLI@1
+- task: TerraformTask@5
   inputs:
     command: 'apply'
     workingDirectory: '.'

@@ -7,40 +7,39 @@ variables:
 - group: TFSecrets
 
 steps:
+# 1️⃣ Checkout your repo so Terraform can see the .tf files
+- checkout: self
+
+# 2️⃣ Install Terraform
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: '1.9.5'
 
-# Terraform Init
+# 3️⃣ Terraform Init (with remote backend)
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-    backendServiceArm: 'sunil-app'                     # ✅ correct for init
-    backendAzureRmResourceGroupName: 'Sunil-vault'
-    backendAzureRmStorageAccountName: 'sunildev'
-    backendAzureRmContainerName: 'file'
-    backendAzureRmKey: 'terraform.tfstate'
-  env:
-    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
-    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
-    ARM_TENANT_ID: $(ARM_TENANT_ID)
-    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    workingDirectory: '$(System.DefaultWorkingDirectory)'      # root of repo
+    backendServiceArm: 'sunil-app'                             # DevOps service connection
+    backendAzureRmResourceGroupName: 'Sunil-vault'             # RG with state storage
+    backendAzureRmStorageAccountName: 'sunildev'               # Storage account
+    backendAzureRmContainerName: 'file'                        # Blob container
+    backendAzureRmKey: 'terraform.tfstate'                     # State file name
 
-# Terraform Plan
+# 4️⃣ Terraform Plan
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    environmentServiceNameAzureRM: 'sunil-app'         # ✅ correct parameter
+    environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection
 
-# Terraform Apply
+# 5️⃣ Terraform Apply
 - task: TerraformTask@5
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     args: '-auto-approve'
-    environmentServiceNameAzureRM: 'sunil-app'         # ✅ correct parameter
+    environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection

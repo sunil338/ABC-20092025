@@ -20,7 +20,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'      # root of repo
+    workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'      # root of repo
     backendServiceArm: 'sunil-app'                             # DevOps service connection
     backendAzureRmResourceGroupName: 'Sunil-vault'             # RG with state storage
     backendAzureRmStorageAccountName: 'sunildev'               # Storage account
@@ -32,7 +32,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'
     environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection
 
 # 5️⃣ Terraform Apply
@@ -40,6 +40,6 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/module-usage'
     args: '-auto-approve'
     environmentServiceNameAzureRM: 'sunil-app'                # DevOps service connection

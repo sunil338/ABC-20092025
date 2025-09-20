@@ -1,0 +1,43 @@
+trigger: none
+
+pool:
+  name: Sunil_pool
+
+variables:
+- group: TFSecrets
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: '1.9.5'
+
+- task: TerraformCLI@1
+  inputs:
+    command: 'init'
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+
+- task: TerraformCLI@1
+  inputs:
+    command: 'plan'
+    workingDirectory: '.'
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+
+- task: TerraformCLI@1
+  inputs:
+    command: 'apply'
+    workingDirectory: '.'
+    args: '-auto-approve'
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+
